@@ -10,5 +10,10 @@ module microc(output wire [5:0] Opcode, output wire zero, input wire clk, reset,
     assign value_one = 10'b0000000001;
     sum increment_pc(add_value, value_one, actual_pc);
     mux2 mux_pc(new_pc, jump_addr, add_value, s_inc);
-    
+
+    // Program Counter
+    registro pc(actual_pc, clk, reset, new_pc);
+
+    // Instruction Memory
+    memprog ProgramMemory(instruction, clk, actual_pc);
 endmodule 
