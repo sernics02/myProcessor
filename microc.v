@@ -16,4 +16,11 @@ module microc(output wire [5:0] Opcode, output wire zero, input wire clk, reset,
 
     // Instruction Memory
     memprog ProgramMemory(instruction, clk, actual_pc);
+
+    // Values Assignations
+    assign Opcode = instruction[15:10];
+    assign RA1 = instruction[11:8];
+    assign RA2 = instruction[7:4];
+    assign WA3 = instruction[3:0];
+    assign inmediate = instruction[11:4];
 endmodule 
