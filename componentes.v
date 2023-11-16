@@ -53,7 +53,7 @@ endmodule
 
 //Biestable para el flag de cero
 //Biestable tipo D síncrono con reset asíncrono por flanco y entrada de habilitación de carga
-module ffd(input wire clk, reset, d, carga, output reg q);
+module ffd(output reg q, input wire clk, reset, d, carga);
   always @(posedge clk, posedge reset)
     if (reset)
 	    q <= 1'b0;

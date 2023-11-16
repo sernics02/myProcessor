@@ -33,7 +33,10 @@ module microc(output wire [5:0] Opcode, output wire zero, input wire clk, reset,
 
     // ALU
     wire[7:0] out_alu_mux;
-    wire zero;
     mux mux_alu(out_alu_mux, RD2, inmediate, s_inm);
-    alu estrellita(WD3, zero, RD1, out_alu_mux, ALUOp);
+    wire z_alu;
+    alu estrellita(WD3, 1z_alu, RD1, out_alu_mux, ALUOp);
+
+    // Zero Flag
+    ffd flag(zero, clk, reset, z_alu, wez);
 endmodule 
