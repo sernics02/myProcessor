@@ -2,17 +2,20 @@ module microc(output wire [5:0] Opcode, output wire zero, input wire clk, reset,
     //Microcontrolador sin memoria de datos de un solo ciclo
 
     wire[15:0] instruction;
-    wire[9:0] new_pc, actual_pc, jump_addr, add_value, value_one;
-    wire[7:0] inmediate, WD3, RD1, RD2;
+    wire[9:0] new_pc, actual_pc, jump_dir;
+    wire[7:0] inmediate, WD3;
     wire[3:0] RA1, RA2, WA3;
 
-    // Program Counter Changes
-    assign value_one = 10'b0000000001;
-    sum increment_pc(add_value, value_one, actual_pc);
-    mux2 mux_pc(new_pc, jump_addr, add_value, s_inc);
+    // Program Counter Increment
+    wire[9:0] outSumPC;
+    sum sumPC(outSumPC, actual_pc, 10'b0000000001);
+
+    // Mux PC
+    assign jump_dir = instruction[9:0];
+    mux2 #(10) muxPC(new_pc, outSumPC, jump_dir, s_inc);
 
     // Program Counter
-    registro pc(actual_pc, clk, reset, new_pc);
+    registro #(10) pc(actual_pc, clk, reset, new_pc);
 
     // Instruction Memory
     memprog ProgramMemory(instruction, clk, actual_pc);
@@ -25,17 +28,18 @@ module microc(output wire [5:0] Opcode, output wire zero, input wire clk, reset,
     assign inmediate = instruction[11:4];
 
     // Selection first register
-    wire[3:0] out_mux_reg;
-    mux2 outMuxReg(out_mux_reg, RA1, WA3, s_inm);
+    wire[3:0] out_mux_files;
+    mux2 #(4) mux_files(out_mux_files, RA1, WA3, s_inm);
 
     // Register bank
-    regfile regfile(RD1, RD2, clk, we, wez, out_mux_reg, RA2, WA3, WD3);
+    wire[7:0] RD1, RD2;
+    regfile registerBank(RD1, RD2, clk, we, out_mux_files, WA3, RA2, WD3);
 
     // ALU
     wire[7:0] out_alu_mux;
-    mux mux_alu(out_alu_mux, RD2, inmediate, s_inm);
+    mux2 #(8) mux_alu(out_alu_mux, RD2, inmediate, s_inm);
     wire z_alu;
-    alu estrellita(WD3, 1z_alu, RD1, out_alu_mux, ALUOp);
+    alu program_alu(WD3, z_alu, RD1, out_alu_mux, ALUOp);
 
     // Zero Flag
     ffd flag(zero, clk, reset, z_alu, wez);
