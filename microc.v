@@ -8,11 +8,11 @@ module microc(output wire [5:0] Opcode, output wire zero, input wire clk, reset,
 
     // Program Counter Increment
     wire[9:0] outSumPC;
-    sum sumPC(outSumPC, actual_pc, 10'b0000000001);
+    sum sumPC(outSumPC, 10'b0000000001, actual_pc);
 
     // Mux PC
     assign jump_dir = instruction[9:0];
-    mux2 #(10) muxPC(new_pc, outSumPC, jump_dir, s_inc);
+    mux2 #(10) muxPC(new_pc, jump_dir, outSumPC, s_inc);
 
     // Program Counter
     registro #(10) pc(actual_pc, clk, reset, new_pc);

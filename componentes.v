@@ -11,7 +11,7 @@ module regfile(output wire [7:0]  RD1, RD2,     //datos leidos
 
   initial
   begin
-    $readmemb("regfile.dat",RegBank); // inicializa los registros a valores conocidos
+    $readmemb("regfile.dat", RegBank); // inicializa los registros a valores conocidos
   end  
   
   // El registro 0 siempre es cero
