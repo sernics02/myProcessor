@@ -30,7 +30,12 @@ module microc_tb;
     // Mostrar tiempo, opcode, zero, clk, reset, s_inc, s_inm, we, wez, ALUOp
     $monitor("%t %b %b %b %b %b %b %b %b %b", $time, Opcode, zero, clk, reset, s_inc, s_inm, we, wez, ALUOp);
     #20
-
+    s_inc = 1'b1;
+    s_inm = 1'b1;
+    we = 1'b1;
+    wez = 1'b1;
+    ALUOp = 3'b000;
+    #40
     $finish;
   end
 
