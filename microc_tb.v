@@ -37,6 +37,9 @@ module microc_tb;
       $dumpvars;
 
       #20;
+      // LI #8 R4
+      // 1000 0000 1111 0100
+      
       #40;
       $finish;
     end
