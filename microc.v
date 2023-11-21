@@ -33,7 +33,7 @@ module microc(output wire [5:0] Opcode, output wire zero, input wire clk, reset,
 
     // Register bank
     wire[7:0] RD1, RD2;
-    regfile registerBank(RD1, RD2, clk, we, out_mux_files, WA3, RA2, WD3);
+    regfile registerBank(RD1, RD2, clk, we, out_mux_files, RA2, WA3, WD3);
 
     // ALU
     wire[7:0] out_alu_mux;

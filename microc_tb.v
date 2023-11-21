@@ -35,25 +35,32 @@ module microc_tb;
       $monitor("AluOP(%b) inc(%b) inm(%b) we(%b) wez(%b)", Opcode, s_inc, s_inm, we, wez);
       $dumpfile("microc_tb.vcd");
       $dumpvars;
-
       #20;
-      // LI #8 R4
-      // 1000 0000 1111 0100
-      // Comprobar que la variable Opcode sea 100000
-      AluOP = Opcode[5:3];
+      // LI #15 R1
+      // 1000 0000 1111 0001
+      AluOP = Opcode[4:2];
       s_inc = 1'b1;
       s_inm = 1'b1;
       we = 1'b1;
       wez = 1'b1;
-      #20;
+      #40;
 
-      // // ADD R1 R2 R3
-      // // 0010 0001 0010 0011
-      // AluOP = Opcode[4:2];
-      // s_inc = 1'b1;
-      // s_inm = 1'b0;
-      // we = 1'b0;
-      // wez = 1'b1;
+      // LI #1 R2
+      // 1000_0000_0001_0010
+      AluOP = Opcode[4:2];
+      s_inc = 1'b1;
+      s_inm = 1'b1;
+      we = 1'b1;
+      wez = 1'b1;
+      #40;
+
+      // ADD R1 R2 R3
+      // 0010_0001_0010_0011
+      AluOP = Opcode[4:2];
+      s_inc = 1'b1;
+      s_inm = 1'b0; 
+      we = 1'b1;
+      wez = 1'b1;
       $finish;
     end
 
