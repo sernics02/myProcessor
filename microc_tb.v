@@ -24,9 +24,8 @@ module microc_tb;
   initial
     begin
       reset <= 1'b1;
-      #3;
+      #5;
       reset <= 1'b0;
-      #2;
     end
 
   // Pruebas
@@ -35,14 +34,14 @@ module microc_tb;
       $monitor("AluOP(%b) inc(%b) inm(%b) we(%b) wez(%b)", Opcode, s_inc, s_inm, we, wez);
       $dumpfile("microc_tb.vcd");
       $dumpvars;
-      #20;
+      #15;
       // LI #15 R1
       // 1000 0000 1111 0001
       AluOP = Opcode[4:2];
       s_inc = 1'b1;
       s_inm = 1'b1;
       we = 1'b1;
-      wez = 1'b1;
+      wez = 1'b0;
       #40;
 
       // LI #1 R2
@@ -61,6 +60,23 @@ module microc_tb;
       s_inm = 1'b0; 
       we = 1'b1;
       wez = 1'b1;
+      #40;
+
+      // Salto
+      AluOP = Opcode[4:2];
+      s_inc = 1'b0;
+      s_inm = 1'b0;
+      we = 0;
+      wez = 0;
+      #40;
+
+      // LI #1 R4
+      AluOP = Opcode[4:2];
+      s_inc = 1'b1;
+      s_inm = 1'b1;
+      we = 1'b1;
+      wez = 1'b0;
+      #40;
       $finish;
     end
 
