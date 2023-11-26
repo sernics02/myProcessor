@@ -33,7 +33,7 @@ module uc_tb;
   // Pruebas
   initial
     begin
-      $monitor("AluOP(%b) inc(%b) inm(%b) we(%b) wez(%b)", Opcode, s_inc, s_inm, we, wez);
+      $monitor("Opcode(%b) inc(%b) inm(%b) we(%b) wez(%b)", Opcode, s_inc, s_inm, we, wez);
       $dumpfile("uc_tb.vcd");
       $dumpvars;
       #15;
@@ -48,7 +48,6 @@ module uc_tb;
       // ADD R1 R2 R3
       // 0010_0001_0010_0011
       #40;
-
       // Salto 15
       #40;
 
